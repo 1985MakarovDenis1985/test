@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import './Forms.scss';
 
-import {addToDb} from "../../indexedDB/db";
+import {getNote, getAllNote, addNote, getNoteByKey, getNotesByCursors} from "../../indexedDB/db";
 
 
 const Form = ({db}) => {
@@ -17,13 +17,28 @@ const Form = ({db}) => {
 
     const getInputValue = (e) => {
         e.preventDefault()
-        // console.log()
-        // add({name: "jkjlkjk"})
         console.log(object.name)
     }
     const addData = (e) => {
         e.preventDefault()
-        addToDb(object)
+        addNote(object)
+    }
+    const getAllData = (e) => {
+        e.preventDefault()
+        getAllNote()
+    }
+    const getDataOne = (e) => {
+        e.preventDefault()
+        getNote()
+    }
+    const getDataByKey = (e) => {
+        e.preventDefault()
+        // определяет индекс по имени или того path key который указан
+        getNoteByKey("Denys")
+    }
+    const getCursor = (e) => {
+        e.preventDefault()
+        getNotesByCursors()
     }
 
 
@@ -37,10 +52,9 @@ const Form = ({db}) => {
                 <input onChange={(e)=>setPassword(e.target.value)} type="text" placeholder="password" name="password"/>
                 <div className="temp_btn_block">
                     <button onClick={addData} id="temp_btn_add">ADD</button>
-                    <button onClick={getInputValue} id="temp_btn_remove">REMOVE</button>
-                    <button id="temp_btn_change">CHANGE</button>
+                    <button onClick={getAllData} id="temp_btn_remove">REMOVE</button>
+                    <button onClick={getCursor} id="temp_btn_change">CHANGE</button>
                 </div>
-
             </form>
         </div>
     )
