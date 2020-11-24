@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import './Forms.scss';
 
-import {getNote, getAllNote, addNote, getNoteByKey, getNotesByCursors} from "../../indexedDB/db";
+import {getNote, getAllNote, addNote, getNoteByKey, getNotesByCursors, putImg} from "../../indexedDB/db";
 
 
 const Form = ({db}) => {
@@ -41,19 +41,30 @@ const Form = ({db}) => {
         getNotesByCursors()
     }
 
+    const x = () => {
+        let str = "base64"
+        let base64 = btoa(str)
+        let decoder = atob(base64)
+
+        console.log(str)
+        console.log(base64)
+        console.log(decoder)
+    }
+
+
 
     return (
         <div className="temp_form_container">
             <form className="temp_form_block">
-                <img className="temp_img" src="" alt=""/>
-                <input  type="file" placeholder="file" name="file"/>
+                <img id="temp_img" className="temp_img" src="" alt=""/>
+                <input onChange={putImg} id="fileImg" type="file" multiple='multiple' placeholder="file" name="file"/>
                 <input onChange={(e)=>setName(e.target.value)} type="text" placeholder="name" name="name"/>
                 <input onChange={(e)=>setEmail(e.target.value)} type="text" placeholder="email" name="email"/>
                 <input onChange={(e)=>setPassword(e.target.value)} type="text" placeholder="password" name="password"/>
                 <div className="temp_btn_block">
                     <button onClick={addData} id="temp_btn_add">ADD</button>
                     <button onClick={getAllData} id="temp_btn_remove">REMOVE</button>
-                    <button onClick={getCursor} id="temp_btn_change">CHANGE</button>
+                    <button onClick={x} id="temp_btn_change">CHANGE</button>
                 </div>
             </form>
         </div>

@@ -109,7 +109,7 @@ export const getNotesByCursors = () => {
         // если объекты(курсоры) существуют - делаем smt и продолжаем перебирать
         if (cursor != null) {
             allHeroes.push(cursor.value)
-            if (cursor.value.name == "Denys") {
+            if (cursor.value.name === "Denys") {
                 allTheSameName.push(cursor.value)
             }
             cursor.continue()
@@ -143,6 +143,44 @@ export const removeItem = (e) => {
 
 
 }
+
+export const removeAllCollection = () => {
+    let transaction = db.transaction(["images"], "readwrite")
+    let store = transaction.objectStore("images");
+    store.clear()
+}
+
+export const putImg = () => {
+    let tx = db.transaction(['heroes'], 'readwrite')
+    let store = tx.objectStore('heroes')
+    let inpImg = document.getElementById("fileImg")
+    store.put(inpImg.files[0], 'img')
+
+    store.get("img").onsuccess = (e) => {
+        let imgFile = e.target.result;
+        let URL = window.URL || window.webkitURL;
+        let imgUrl = URL.createObjectURL(imgFile);
+        document.getElementById("temp_img").setAttribute("src", imgUrl);
+    }
+}
+
+    // function toDataURL(url, callback) {
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.onload = function() {
+    //         var reader = new FileReader();
+    //         reader.onloadend = function() {
+    //             callback(reader.result);
+    //         }
+    //         reader.readAsDataURL(xhr.response);
+    //     };
+    //     xhr.open('GET', url);
+    //     xhr.responseType = 'blob';
+    //     xhr.send();
+    // }
+    //
+    // toDataURL('https://www.gravatar.com/avatar/d50c83cc0c6523b4d3f6085295c953e0', function(dataUrl) {
+    //     console.log('RESULT:', dataUrl)
+    // })
 
 
 

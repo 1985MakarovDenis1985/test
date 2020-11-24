@@ -15,7 +15,7 @@ const Items = () => {
     return (
         <div className="item_container">
             {
-                heroes.map(el=>(
+                heroes.slice(0,heroes.length-1).map(el=>(
                     <div className='item_box' key={el.email}>
                         <p>{el.name}</p>
                         <p>{el.email}</p>
